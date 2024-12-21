@@ -23,6 +23,15 @@ public class ProductRepository(StoreContext _context) : IProductRepository
         _context.Products.Entry(product).State = EntityState.Modified;
     }
 
+    public async Task<IReadOnlyList<string>> GetBrandsAsync()
+    {
+        return await _context.Products
+                    .Where(p => p.Brand != null)
+                    .Select(p => p.Brand)
+                    .Distinct()
+                    .ToListAsync();
+    }
+
     public async Task<Product?> GetProductByIdAsync(int id)
     {
         return await _context.Products.FindAsync(id);
@@ -31,6 +40,15 @@ public class ProductRepository(StoreContext _context) : IProductRepository
     public async Task<IReadOnlyList<Product>> GetProductsAsync()
     {
         return await _context.Products.ToListAsync();
+    }
+
+    public async Task<IReadOnlyList<string>> GetTypesAsync()
+    {
+        return await _context.Products
+                    .Where(p => p.Type != null)
+                    .Select(p => p.Type)
+                    .Distinct()
+                    .ToListAsync();
     }
 
     public async Task<bool> ProductExistAsync(int id)
