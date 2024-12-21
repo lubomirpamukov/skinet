@@ -12,9 +12,9 @@ public class GenericRepository<T>(StoreContext _context) : IGenericRepository<T>
          _context.Set<T>().Add(entity);
     }
 
-    public bool Exists(int id)
+    public async Task<bool> ExistsAsync(int id)
     {
-        return _context.Set<T>().Any(x => x.Id == id);
+        return await _context.Set<T>().AnyAsync(x => x.Id == id);
     }
 
     public async Task<T?> GetByIdAsync(int id)
@@ -32,7 +32,7 @@ public class GenericRepository<T>(StoreContext _context) : IGenericRepository<T>
         _context.Set<T>().Remove(entity);
     }
 
-    public async Task<bool> SaveAllAsync()
+    public async Task<bool> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync() > 0;
     }

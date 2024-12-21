@@ -10,19 +10,19 @@ namespace API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class ProductsController(IProductRepository _productRepo) : ControllerBase
+public class ProductsController(IGenericRepository<Product> _productRepo) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetProductsAsync(string? brand, string? type, string? sort)
     {
-        var products = await _productRepo.GetProductsAsync(brand, type, sort);
+        var products = await _productRepo.ListAllAsync();
         return Ok(products);
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult>GetProductByIdAsync(int id)
     {
-        var product = await  _productRepo.GetProductByIdAsync(id);
+        var product = await  _productRepo.GetByIdAsync(id);
         if(product == null) return NotFound(id);
         return Ok(product);
     }
@@ -30,7 +30,7 @@ public class ProductsController(IProductRepository _productRepo) : ControllerBas
     [HttpPost]
     public async Task<IActionResult>CreateProductAsync(Product product)
     {
-        _productRepo.AddProduct(product);
+        _productRepo.Add(product);
         if(await _productRepo.SaveChangesAsync())
         {
             return CreatedAtAction("GetProductByIdsync", new {id = product.Id}, product);
@@ -45,7 +45,7 @@ public class ProductsController(IProductRepository _productRepo) : ControllerBas
         if(product.Id != id || !await ProductExistAsync(id))
             return BadRequest("Can't update this product");
         
-        _productRepo.EditProduct(product);
+        _productRepo.Update(product);
 
         if(await _productRepo.SaveChangesAsync())
         {
@@ -58,10 +58,10 @@ public class ProductsController(IProductRepository _productRepo) : ControllerBas
     [HttpDelete("{id:int}")]
     public async Task<IActionResult>DeleteProductAsync(int id)
     {
-        var product = await _productRepo.GetProductByIdAsync(id);
+        var product = await _productRepo.GetByIdAsync(id);
         if(product == null)return NotFound("Product dont exist");
             
-        _productRepo.DeleteProduct(product);
+        _productRepo.Remove(product);
         if(await _productRepo.SaveChangesAsync())
         {
             return NoContent();
@@ -73,17 +73,19 @@ public class ProductsController(IProductRepository _productRepo) : ControllerBas
     [HttpGet("brands")]
     public async Task<IActionResult>GetBrandsAsync()
     {
-        return Ok(await _productRepo.GetBrandsAsync());
+        //TODO implement
+        return Ok();
     }
 
     [HttpGet("types")]
     public async Task<IActionResult>GetTypesAsync()
     {
-        return Ok(await _productRepo.GetTypesAsync());
+       //TODO implement
+        return Ok();
     }
 
     private async Task<bool>ProductExistAsync(int id)
     {
-        return await _productRepo.ProductExistAsync(id);
+        return await _productRepo.ExistsAsync(id);
     }
 }
