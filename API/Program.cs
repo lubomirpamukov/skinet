@@ -1,6 +1,7 @@
 using Infrastructure.Data;
 using Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Writers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,5 +27,19 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+try
+{
+    using var scope = app.Services.CreateScope(); //creating a scope
+    var services = scope.ServiceProvider; // getting service provider
+    var context = services.GetRequiredService<StoreContext>(); //initializing database context
+    await context.Database.MigrateAsync(); // auto migrating changes to the database
+    await DataSeeder.SeedDataAsync(context); // seeding data to the database
+}
+catch (System.Exception ex)
+{
+    
+    Console.WriteLine(ex);
+}
 
 app.Run();
