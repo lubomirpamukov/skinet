@@ -37,9 +37,21 @@ public class ProductRepository(StoreContext _context) : IProductRepository
         return await _context.Products.FindAsync(id);
     }
 
-    public async Task<IReadOnlyList<Product>> GetProductsAsync()
+    public async Task<IReadOnlyList<Product>> GetProductsAsync(string? brand, string? type)
     {
-        return await _context.Products.ToListAsync();
+        var products = _context.Products.AsQueryable();
+
+        if(!string.IsNullOrWhiteSpace(brand))
+        {
+            products = products.Where(p => p.Brand == brand);
+        }
+
+        if(!string.IsNullOrWhiteSpace(type))
+        {
+            products = products.Where(p => p.Type == type);
+        }
+
+        return await products.ToListAsync();
     }
 
     public async Task<IReadOnlyList<string>> GetTypesAsync()
