@@ -70,6 +70,18 @@ public class ProductsController(IProductRepository _productRepo) : ControllerBas
         return BadRequest("Could not update product");
     }
 
+    [HttpGet("brands")]
+    public async Task<IActionResult>GetBrandsAsync()
+    {
+        return Ok(await _productRepo.GetBrandsAsync());
+    }
+
+    [HttpGet("types")]
+    public async Task<IActionResult>GetTypesAsync()
+    {
+        return Ok(await _productRepo.GetTypesAsync());
+    }
+
     private async Task<bool>ProductExistAsync(int id)
     {
         return await _productRepo.ProductExistAsync(id);
