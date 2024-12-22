@@ -1,5 +1,6 @@
 using System;
 using Core.Entities;
+using Core.Specification;
 using Infrastructure.Data;
 using Infrastructure.Interfaces;
 using Microsoft.AspNetCore.DataProtection.Repositories;
@@ -15,7 +16,8 @@ public class ProductsController(IGenericRepository<Product> _productRepo) : Cont
     [HttpGet]
     public async Task<IActionResult> GetProductsAsync(string? brand, string? type, string? sort)
     {
-        var products = await _productRepo.ListAllAsync();
+        var spec = new ProductSpecification(brand,type);
+        var products = await _productRepo.ListWithSpecAsync(spec);
         return Ok(products);
     }
 
