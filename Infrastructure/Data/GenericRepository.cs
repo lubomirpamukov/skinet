@@ -1,5 +1,6 @@
 using System;
 using Core.Entities;
+using Core.Interfaces;
 using Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,9 +23,19 @@ public class GenericRepository<T>(StoreContext _context) : IGenericRepository<T>
         return await _context.Set<T>().FindAsync(id);
     }
 
+    public async Task<T?> GetEntityWithSpecAsync(ISpecification<T> spec)
+    {
+        return await ApplySpecification(spec).FirstOrDefaultAsync();
+    }
+
     public async Task<IReadOnlyList<T?>> ListAllAsync()
     {
         return await _context.Set<T>().ToListAsync();
+    }
+
+    public async Task<IReadOnlyList<T>> ListWithSpecAsync(ISpecification<T> spec)
+    {
+        return await ApplySpecification(spec).ToListAsync();
     }
 
     public void Remove(T entity)
@@ -41,5 +52,10 @@ public class GenericRepository<T>(StoreContext _context) : IGenericRepository<T>
     {
         _context.Set<T>().Attach(entity);
         _context.Entry(entity).State = EntityState.Modified;
+    }
+
+    private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+    {
+        return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), spec);
     }
 }
