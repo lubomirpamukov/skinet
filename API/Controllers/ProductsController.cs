@@ -75,15 +75,15 @@ public class ProductsController(IGenericRepository<Product> _productRepo) : Cont
     [HttpGet("brands")]
     public async Task<IActionResult>GetBrandsAsync()
     {
-        //TODO implement
-        return Ok();
+        var spec = new BrandListSpecification();
+        return Ok(await _productRepo.ListWithSpecAsync(spec));
     }
 
     [HttpGet("types")]
     public async Task<IActionResult>GetTypesAsync()
     {
-       //TODO implement
-        return Ok();
+       var spec = new TypeListSpecification();
+        return Ok(await _productRepo.ListWithSpecAsync(spec));
     }
 
     private async Task<bool>ProductExistAsync(int id)
