@@ -10,9 +10,9 @@ namespace API.Controllers;
 public class ProductsController(IGenericRepository<Product> _productRepo) : ControllerBase
 {
     [HttpGet]
-    public async Task<IActionResult> GetProductsAsync(string? brand, string? type, string? sort)
+    public async Task<IActionResult> GetProductsAsync([FromQuery]ProductSpecParams productSpec)
     {
-        var spec = new ProductSpecification(brand,type,sort);
+        var spec = new ProductSpecification(productSpec);
         var products = await _productRepo.ListWithSpecAsync(spec);
         return Ok(products);
     }
