@@ -1,11 +1,7 @@
-using System;
 using Core.Entities;
 using Core.Specification;
-using Infrastructure.Data;
 using Infrastructure.Interfaces;
-using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
