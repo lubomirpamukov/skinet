@@ -11,6 +11,7 @@ public class ProductSpecification : BaseSpecification<Product>
     )
     {
         var pageIndex = specParams.PageIndex > 0 ? specParams.PageIndex : 1;
+        specParams.PageSize = specParams.PageSize > 0 ? specParams.PageSize : 6;
         
         ApplyPagination(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
 
