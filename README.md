@@ -1,6 +1,6 @@
 # Skinet
 
-Skinet is a project im using to learn web api and Angular It's a fictional e-commerce shop for selling ski supplies, developed using **C# ASP.NET Web API** for the backend and **Angular** for the frontend. This project demonstrates a modern, scalable, and responsive application architecture designed to deliver a seamless shopping experience.
+Skinet is a project which I am using to learn Web API and Angular It's a fictional e-commerce shop for selling ski supplies, developed using **C# ASP.NET Web API** for the backend and **Angular** for the frontend. This project demonstrates a modern, scalable, and responsive application architecture designed to deliver a seamless shopping experience.
 
 ---
 
