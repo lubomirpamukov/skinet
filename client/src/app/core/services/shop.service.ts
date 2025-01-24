@@ -31,9 +31,13 @@ export class ShopService {
       params = params.append('sort', shopParams.sort)
     }
 
+    if(shopParams.search){
+      params = params.append('search', shopParams.search)
+    }
+
     params = params.append('pageSize', shopParams.pageSize)
     params = params.append('pageIndex', shopParams.pageIndex)
-    
+
 
     return this.http.get<Pagination<Product>>(this.baseUrl + 'products?' + params)
   }
