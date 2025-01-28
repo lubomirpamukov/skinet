@@ -1,5 +1,5 @@
 @if(product){
-    <mat-card appearance="raised" class="h-full flex flex-col justify-between p-4">
+    <mat-card appearance="raised" class="h-full flex flex-col justify-between p-4 product-card" routerLink="/shop/{{product.id}}">
         <img src="{{product.pictureUrl}}" alt="image of {{product.name}}">
         <mat-card-content class="mt-2">
             <h2 class="text-sm font-semibold uppercase">{{product.name}}</h2>
