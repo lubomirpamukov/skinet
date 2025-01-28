@@ -71,7 +71,7 @@ export class ShopComponent implements OnInit{
     this.shopParams.pageIndex = 1;
     this.getProducts();
   }
-
+//test
   onSortChange(event: MatSelectionListChange){
     const selectedOption = event.options[0];
 
