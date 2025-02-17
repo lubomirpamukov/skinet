@@ -1,6 +1,8 @@
 using API.Middleware;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Interfaces;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Writers;
 using StackExchange.Redis;
@@ -23,6 +25,7 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(config =>
     var configuration = ConfigurationOptions.Parse(connectionString, true);
     return ConnectionMultiplexer.Connect(configuration);
 });
+builder.Services.AddSingleton<ICartService, CartService>();
  
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
