@@ -5,11 +5,13 @@ import { ProductDetailsComponent } from './features/shop/product-details/product
 import { TestErrorComponent } from './features/test-error/test-error.component';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
 import { ServerErrorComponent } from './shared/components/server-error/server-error.component';
+import { CartComponent } from './features/cart/cart.component';
 
 export const routes: Routes = [
     {path: 'home', component: HomeComponent, title: 'Home'},
     {path: 'shop', component: ShopComponent, title: 'Shop'},
     {path: 'shop/:id', component: ProductDetailsComponent, title: 'Product Details'},
+    {path: 'cart', component: CartComponent, title: 'Cart'},
     {path: 'test-error', component: TestErrorComponent, title: 'Error Test'},
     {path: 'not-found', component: NotFoundComponent, title: 'Not found'},
     {path: 'server-error', component: ServerErrorComponent, title: 'Server error'},
