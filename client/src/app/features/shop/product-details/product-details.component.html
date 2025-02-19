@@ -13,6 +13,9 @@
                 <!-- Product Info Section -->
                 <div>
                     <h1 class="text-2xl md:text-3xl font-semibold text-gray-900">{{product.name}}</h1>
+                    
+                    <p>You have {{quantityInCart}} of this item in your cart</p>
+                    
                     <div class="mt-4 items-center gap-4 flex">
                         <p class="text-2xl md:text-3xl font-extrabold text-gray-900">
                             {{product.price | currency}}
@@ -22,17 +25,19 @@
                     <!-- Buttons and Quantity -->
                     <div class="flex flex-wrap gap-4 mt-6 items-stretch">
                         <button 
+                            (click)="updateCart()"
+                            [disabled]="quantity === quantityInCart"
                             mat-flat-button 
                             class="flex items-center gap-2  text-white py-2 rounded shadow-md h-full">
                             <mat-icon class="size-10 flex items-center justify-center">shopping_cart</mat-icon>
-                            Add to cart
+                            {{getButtonText()}}
                         </button>
 
                         <mat-form-field 
                             appearance="outline" 
                             class="w-full sm:w-auto flex-1">
                             <mat-label>Quantity</mat-label>
-                            <input matInput type="number" class="w-full">
+                            <input matInput min="0" [(ngModel)]="quantity" type="number" class="w-full">
                         </mat-form-field>
                     </div>
 
