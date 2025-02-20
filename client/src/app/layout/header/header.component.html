@@ -13,8 +13,13 @@
                matBadgeSize="large" class="custom-badge mt-2 mr-3">
                 <mat-icon>shopping_cart</mat-icon>
             </a>
-            <button routerLink="/account/login" routerLinkActive="active" mat-stroked-button>Login</button>
-            <button routerLink="/account/register" routerLinkActive="active" mat-stroked-button>Register</button>
+            @if(accountService.currentUser()){
+                <button mat-stroked-button (click)="logout()">Logout</button>
+            }@else {
+                <button routerLink="/account/login" routerLinkActive="active" mat-stroked-button>Login</button>
+                <button routerLink="/account/register" routerLinkActive="active" mat-stroked-button>Register</button>
+            }
+            
         </div>
     </div>
 </header>
