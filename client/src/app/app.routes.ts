@@ -7,6 +7,8 @@ import { NotFoundComponent } from './shared/components/not-found/not-found.compo
 import { ServerErrorComponent } from './shared/components/server-error/server-error.component';
 import { CartComponent } from './features/cart/cart.component';
 import { CheckoutComponent } from './features/checkout/checkout.component';
+import { LoginComponent } from './features/account/login/login.component';
+import { RegisterComponent } from './features/account/register/register.component';
 
 export const routes: Routes = [
     {path: 'home', component: HomeComponent, title: 'Home'},
@@ -14,6 +16,8 @@ export const routes: Routes = [
     {path: 'shop/:id', component: ProductDetailsComponent, title: 'Product Details'},
     {path: 'cart', component: CartComponent, title: 'Cart'},
     {path: 'checkout', component: CheckoutComponent, title: 'Checkout'},
+    {path: 'login', component: LoginComponent, title: 'Login'},
+    {path: 'register', component: RegisterComponent, title: 'Register'},
     {path: 'test-error', component: TestErrorComponent, title: 'Error Test'},
     {path: 'not-found', component: NotFoundComponent, title: 'Not found'},
     {path: 'server-error', component: ServerErrorComponent, title: 'Server error'},
