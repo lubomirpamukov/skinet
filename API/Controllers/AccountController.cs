@@ -1,7 +1,10 @@
+using System.Security.Claims;
 using API.DTO;
 using Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
@@ -23,5 +26,40 @@ public class AccountController (SignInManager<AppUser> signInManager) : BaseApiC
         if(!result.Succeeded) return BadRequest(result.Errors);
 
         return Ok();
+    }
+
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<ActionResult> Logout()
+    {
+        await signInManager.SignOutAsync();
+
+        return NoContent();
+    }
+
+    [HttpGet("user-info")]
+    public async Task<ActionResult> GetUserInfo() // To Do: make it strongly typed ActionResult<UserDto>
+    {
+        if(User.Identity?.IsAuthenticated == false) return NoContent();
+
+        var user = await signInManager.UserManager.Users
+        .FirstOrDefaultAsync(x => x.Email == User.FindFirstValue(ClaimTypes.Email));
+
+        if(user == null) return Unauthorized();
+
+        return Ok(new
+            {
+                user.FirstName,
+                user.LastName,
+                user.Email
+            }
+        );
+    }
+
+    [HttpGet]
+    public ActionResult<bool> GetAuthState()
+    {
+        //return Ok(new {IsAuthenticated = User.Identity?.IsAuthenticated ?? false});
+        return User.Identity?.IsAuthenticated ?? false;
     }
 }
