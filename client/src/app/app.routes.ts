@@ -11,6 +11,7 @@ import { LoginComponent } from './features/account/login/login.component';
 import { RegisterComponent } from './features/account/register/register.component';
 import { authGuard } from './core/guards/auth.guard';
 import { cartGuard } from './core/guards/cart.guard';
+import { EmptyStateComponent } from './shared/components/empty-state/empty-state.component';
 
 export const routes: Routes = [
     {path: 'home', component: HomeComponent, title: 'Home'},
