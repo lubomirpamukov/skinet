@@ -63,7 +63,7 @@ public class AccountController (SignInManager<AppUser> signInManager) : BaseApiC
         );
     }
 
-    [HttpGet]
+    [HttpGet("auth-status")]
     public ActionResult<bool> GetAuthState()
     {
         //return Ok(new {IsAuthenticated = User.Identity?.IsAuthenticated ?? false});
