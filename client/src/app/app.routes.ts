@@ -9,13 +9,14 @@ import { CartComponent } from './features/cart/cart.component';
 import { CheckoutComponent } from './features/checkout/checkout.component';
 import { LoginComponent } from './features/account/login/login.component';
 import { RegisterComponent } from './features/account/register/register.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
     {path: 'home', component: HomeComponent, title: 'Home'},
     {path: 'shop', component: ShopComponent, title: 'Shop'},
     {path: 'shop/:id', component: ProductDetailsComponent, title: 'Product Details'},
     {path: 'cart', component: CartComponent, title: 'Cart'},
-    {path: 'checkout', component: CheckoutComponent, title: 'Checkout'},
+    {path: 'checkout', component: CheckoutComponent, canActivate: [authGuard], title: 'Checkout'},
     {path: 'account/login', component: LoginComponent, title: 'Login'},
     {path: 'account/register', component: RegisterComponent, title: 'Register'},
     {path: 'test-error', component: TestErrorComponent, title: 'Error Test'},
