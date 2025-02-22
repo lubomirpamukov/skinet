@@ -19,7 +19,22 @@ public static class DataSeeder
             //Add products to database
             if (products?.Any() != true) return;
 
-            await context.AddRangeAsync(products);
+            await context.Products.AddRangeAsync(products);
+            await context.SaveChangesAsync();
+        }
+
+        if(!context.DeliveryMethods.Any())
+        {
+            //Read all data from the file
+            var devliveryData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/delivery.json");
+
+            //Deserialize to c# objects
+            var deliveryMethods = JsonSerializer.Deserialize<List<DeliveryMethod>>(devliveryData);
+
+            //Add products to database
+            if (deliveryMethods?.Any() != true) return;
+
+            await context.DeliveryMethods.AddRangeAsync(deliveryMethods);
             await context.SaveChangesAsync();
         }
     }
